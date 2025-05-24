@@ -419,6 +419,33 @@
             background-color: #cc0000;
         }
 
+        .lyrics-toggle-btn {
+            background: #f5f5f5;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 16px;
+            margin-right: 10px;
+            cursor: pointer;
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        .lyrics-toggle-btn:hover {
+            background: #000;
+            color: white;
+        }
+
+        .lyrics-content {
+            display: none;
+            margin-top: 15px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            white-space: pre-line;
+            font-size: 0.9em;
+            color: #666;
+        }
+
         /* 情境選擇區域 */
         .scenario-section {
             margin: 20px 0;
@@ -493,17 +520,10 @@
             margin-top: 5px;
         }
 
-        .song-stats {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .stat-item {
-            background-color: #f5f5f5;
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 0.9em;
+        .song-ratings {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
         }
 
         /* 按鈕共用樣式 */
@@ -1640,9 +1660,13 @@
                                         `).join('')}
                                     </div>
                                     <div class="song-rating-display"></div>
+                                    <button class="lyrics-toggle-btn" data-song-id="${song.歌名.replace(/\s+/g, '-')}">查看歌詞</button>
                                     <a href="${song.YouTube連結}" target="_blank" class="youtube-link">
                                         在 YouTube 上播放
                                     </a>
+                                    <div class="lyrics-content" id="lyrics-${song.歌名.replace(/\s+/g, '-')}">
+                                        ${song.歌詞 || '暫無歌詞'}
+                                    </div>
                                 </div>
                             </div>
                         `).join('')}`
@@ -1664,6 +1688,22 @@
                             addSongRating(songName, rating);
                             displayElement.textContent = `您給這首歌 ${rating} 顆星`;
                         });
+                    });
+                });
+
+                // 綁定歌詞按鈕點擊事件
+                document.querySelectorAll('.lyrics-toggle-btn').forEach(button => {
+                    button.addEventListener('click', () => {
+                        const songId = button.dataset.songId;
+                        const lyricsContent = document.getElementById(`lyrics-${songId}`);
+
+                        if (lyricsContent.style.display === 'block') {
+                            lyricsContent.style.display = 'none';
+                            button.textContent = '查看歌詞';
+                        } else {
+                            lyricsContent.style.display = 'block';
+                            button.textContent = '收起歌詞';
+                        }
                     });
                 });
             }
