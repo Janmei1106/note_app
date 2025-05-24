@@ -366,61 +366,95 @@
             background: white;
             border-radius: 12px;
             margin: 15px 0;
-            padding: 20px;
+            padding: 15px;
             display: flex;
-            gap: 20px;
+            gap: 15px;
             border: 1px solid #eee;
             transition: transform 0.3s ease;
         }
 
-        .song-actions {
+        .song-cover-large {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .song-title {
+            font-size: 1.2em;
+            margin-bottom: 4px;
+            color: #333;
+        }
+
+        .song-artist {
+            font-size: 0.9em;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .info-row {
             display: flex;
-            gap: 10px;
-            margin: 15px 0;
+            align-items: center;
+            margin-bottom: 6px;
+            padding: 2px 0;
+        }
+
+        .info-label {
+            font-size: 0.85em;
+            color: #666;
+            min-width: 45px;
+        }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            flex: 1;
+        }
+
+        .info-tag {
+            background-color: #f8f8f8;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            color: #666;
+            display: inline-flex;
             align-items: center;
         }
 
-        .lyrics-toggle-btn {
-            background: #f5f5f5;
-            border: none;
-            border-radius: 20px;
-            padding: 8px 16px;
-            cursor: pointer;
-            font-size: 0.9em;
-            color: #333;
-            transition: all 0.3s ease;
+        .song-info-rows {
+            margin: 8px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
         }
 
-        .lyrics-toggle-btn:hover {
-            background: #000;
-            color: white;
-            transform: translateY(-2px);
+        .song-actions {
+            margin-top: 10px;
+            display: flex;
+            gap: 8px;
+        }
+
+        .lyrics-toggle-btn {
+            font-size: 0.85em;
+            padding: 4px 12px;
+        }
+
+        .youtube-link {
+            font-size: 0.85em;
+            padding: 4px 12px;
         }
 
         .lyrics-content {
-            display: none;
-            margin: 15px 0;
-            padding: 20px;
-            background: #f9f9f9;
-            border-radius: 12px;
-            white-space: pre-line;
             font-size: 0.9em;
-            color: #666;
-            line-height: 1.6;
-            border: 1px solid #eee;
+            margin-top: 8px;
+            padding: 10px;
         }
 
         .song-ratings {
             margin-top: 10px;
             padding-top: 10px;
             border-top: 1px solid #eee;
-        }
-
-        .song-cover-large {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 8px;
         }
 
         .song-info {
@@ -1140,6 +1174,9 @@
 
         .song-info-rows {
             margin: 15px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
 
         .info-row {
@@ -1697,7 +1734,12 @@
                                             <span class="info-label">語言:</span>
                                             <div class="tag-list">
                                                 <span class="info-tag">${song.語言}</span>
-                                                <span class="info-tag">點閱率: ${formatViews(song.點閱率)}</span>
+                                            </div>
+                                        </div>
+                                        <div class="info-row">
+                                            <span class="info-label">點閱率:</span>
+                                            <div class="tag-list">
+                                                <span class="info-tag">${formatViews(song.點閱率)}</span>
                                             </div>
                                         </div>
                                         <div class="info-row">
