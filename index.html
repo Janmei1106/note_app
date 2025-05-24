@@ -1137,6 +1137,54 @@
             padding-top: 10px;
             border-top: 1px solid #eee;
         }
+
+        .song-info-rows {
+            margin: 15px 0;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 8px 0;
+        }
+
+        .info-label {
+            font-weight: bold;
+            min-width: 60px;
+            color: #333;
+        }
+
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .info-tag {
+            background-color: #f5f5f5;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            color: #333;
+            display: inline-flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .info-tag:hover {
+            background-color: #000;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .song-actions {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            align-items: center;
+        }
     </style>
 </head>
 
@@ -1651,30 +1699,30 @@
                                 <div class="song-info">
                                     <h3 class="song-title">${song.歌名}</h3>
                                     <p class="song-artist">${song.歌手}</p>
-                                    <div class="song-stats">
-                                        <div class="stat-item">
-                                            <span>語言:</span>
-                                            <strong>${song.語言}</strong>
+                                    <div class="song-info-rows">
+                                        <div class="info-row">
+                                            <span class="info-label">語言:</span>
+                                            <div class="tag-list">
+                                                <span class="info-tag">${song.語言}</span>
+                                                <span class="info-tag">點閱率: ${formatViews(song.點閱率)}</span>
+                                            </div>
                                         </div>
-                                        <div class="stat-item">
-                                            <span>點閱率:</span>
-                                            <strong>${formatViews(song.點閱率)}</strong>
+                                        <div class="info-row">
+                                            <span class="info-label">情緒:</span>
+                                            <div class="tag-list">
+                                                ${song.情緒.split(/[,、；]/).map(emotion =>
+                            `<span class="info-tag">${emotion.trim()}</span>`
+                        ).join('')}
+                                            </div>
                                         </div>
-                                        <div class="stat-item">
-                                            <span>情緒:</span>
-                                            <strong>${song.情緒}</strong>
+                                        <div class="info-row">
+                                            <span class="info-label">情境:</span>
+                                            <div class="tag-list">
+                                                ${song.情境 ? song.情境.split(/[,、；]/).map(scenario =>
+                            `<span class="info-tag">${scenario.trim()}</span>`
+                        ).join('') : '<span class="info-tag">無</span>'}
+                                            </div>
                                         </div>
-                                        ${song.情境 ? `
-                                        <div class="stat-item">
-                                            <span>情境:</span>
-                                            <strong>${song.情境}</strong>
-                                        </div>
-                                        ` : ''}
-                                    </div>
-                                    <div class="rating" data-song="${song.歌名}">
-                                        ${Array(5).fill().map((_, i) => `
-                                            <span class="star" data-rating="${i + 1}">★</span>
-                                        `).join('')}
                                     </div>
                                     <div class="song-rating-display"></div>
                                     <div class="song-actions">
