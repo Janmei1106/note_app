@@ -366,95 +366,23 @@
             background: white;
             border-radius: 12px;
             margin: 15px 0;
-            padding: 15px;
+            padding: 20px;
             display: flex;
-            gap: 15px;
+            gap: 20px;
             border: 1px solid #eee;
             transition: transform 0.3s ease;
         }
 
+        .song-detail-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
         .song-cover-large {
-            width: 150px;
-            height: 150px;
+            width: 200px;
+            height: 200px;
             object-fit: cover;
             border-radius: 8px;
-        }
-
-        .song-title {
-            font-size: 1.2em;
-            margin-bottom: 4px;
-            color: #333;
-        }
-
-        .song-artist {
-            font-size: 0.9em;
-            color: #666;
-            margin-bottom: 8px;
-        }
-
-        .info-row {
-            display: flex;
-            align-items: center;
-            margin-bottom: 6px;
-            padding: 2px 0;
-        }
-
-        .info-label {
-            font-size: 0.85em;
-            color: #666;
-            min-width: 45px;
-        }
-
-        .tag-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-            flex: 1;
-        }
-
-        .info-tag {
-            background-color: #f8f8f8;
-            padding: 2px 8px;
-            border-radius: 12px;
-            font-size: 0.8em;
-            color: #666;
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .song-info-rows {
-            margin: 8px 0;
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .song-actions {
-            margin-top: 10px;
-            display: flex;
-            gap: 8px;
-        }
-
-        .lyrics-toggle-btn {
-            font-size: 0.85em;
-            padding: 4px 12px;
-        }
-
-        .youtube-link {
-            font-size: 0.85em;
-            padding: 4px 12px;
-        }
-
-        .lyrics-content {
-            font-size: 0.9em;
-            margin-top: 8px;
-            padding: 10px;
-        }
-
-        .song-ratings {
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px solid #eee;
         }
 
         .song-info {
@@ -489,12 +417,6 @@
 
         .youtube-link:hover {
             background-color: #cc0000;
-        }
-
-        .song-rating-display {
-            margin-top: 5px;
-            font-size: 0.9em;
-            color: #666;
         }
 
         /* 情境選擇區域 */
@@ -571,10 +493,17 @@
             margin-top: 5px;
         }
 
-        .song-ratings {
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px solid #eee;
+        .song-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .stat-item {
+            background-color: #f5f5f5;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
         }
 
         /* 按鈕共用樣式 */
@@ -1171,50 +1100,6 @@
             padding-top: 10px;
             border-top: 1px solid #eee;
         }
-
-        .song-info-rows {
-            margin: 15px 0;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .info-row {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-            padding: 8px 0;
-        }
-
-        .info-label {
-            font-weight: bold;
-            min-width: 60px;
-            color: #333;
-        }
-
-        .tag-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            flex: 1;
-        }
-
-        .info-tag {
-            background-color: #f5f5f5;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            color: #333;
-            display: inline-flex;
-            align-items: center;
-        }
-
-        .song-actions {
-            display: flex;
-            gap: 10px;
-            margin: 15px 0;
-            align-items: center;
-        }
     </style>
 </head>
 
@@ -1729,46 +1614,35 @@
                                 <div class="song-info">
                                     <h3 class="song-title">${song.歌名}</h3>
                                     <p class="song-artist">${song.歌手}</p>
-                                    <div class="song-info-rows">
-                                        <div class="info-row">
-                                            <span class="info-label">語言:</span>
-                                            <div class="tag-list">
-                                                <span class="info-tag">${song.語言}</span>
-                                            </div>
+                                    <div class="song-stats">
+                                        <div class="stat-item">
+                                            <span>語言:</span>
+                                            <strong>${song.語言}</strong>
                                         </div>
-                                        <div class="info-row">
-                                            <span class="info-label">點閱率:</span>
-                                            <div class="tag-list">
-                                                <span class="info-tag">${formatViews(song.點閱率)}</span>
-                                            </div>
+                                        <div class="stat-item">
+                                            <span>點閱率:</span>
+                                            <strong>${formatViews(song.點閱率)}</strong>
                                         </div>
-                                        <div class="info-row">
-                                            <span class="info-label">情緒:</span>
-                                            <div class="tag-list">
-                                                ${song.情緒.split(/[,、；]/).map(emotion =>
-                            `<span class="info-tag">${emotion.trim()}</span>`
-                        ).join('')}
-                                            </div>
+                                        <div class="stat-item">
+                                            <span>情緒:</span>
+                                            <strong>${song.情緒}</strong>
                                         </div>
-                                        <div class="info-row">
-                                            <span class="info-label">情境:</span>
-                                            <div class="tag-list">
-                                                ${song.情境 ? song.情境.split(/[,、；]/).map(scenario =>
-                            `<span class="info-tag">${scenario.trim()}</span>`
-                        ).join('') : '<span class="info-tag">無</span>'}
-                                            </div>
+                                        ${song.情境 ? `
+                                        <div class="stat-item">
+                                            <span>情境:</span>
+                                            <strong>${song.情境}</strong>
                                         </div>
+                                        ` : ''}
+                                    </div>
+                                    <div class="rating" data-song="${song.歌名}">
+                                        ${Array(5).fill().map((_, i) => `
+                                            <span class="star" data-rating="${i + 1}">★</span>
+                                        `).join('')}
                                     </div>
                                     <div class="song-rating-display"></div>
-                                    <div class="song-actions">
-                                        <button class="lyrics-toggle-btn" data-song-id="${song.歌名.replace(/\s+/g, '-')}">查看歌詞</button>
-                                        <a href="${song.YouTube連結}" target="_blank" class="youtube-link">
-                                            在 YouTube 上播放
-                                        </a>
-                                    </div>
-                                    <div class="lyrics-content" id="lyrics-${song.歌名.replace(/\s+/g, '-')}">
-                                        ${song.歌詞 || '暫無歌詞'}
-                                    </div>
+                                    <a href="${song.YouTube連結}" target="_blank" class="youtube-link">
+                                        在 YouTube 上播放
+                                    </a>
                                 </div>
                             </div>
                         `).join('')}`
@@ -1790,22 +1664,6 @@
                             addSongRating(songName, rating);
                             displayElement.textContent = `您給這首歌 ${rating} 顆星`;
                         });
-                    });
-                });
-
-                // 綁定歌詞按鈕點擊事件
-                document.querySelectorAll('.lyrics-toggle-btn').forEach(button => {
-                    button.addEventListener('click', () => {
-                        const songId = button.dataset.songId;
-                        const lyricsContent = document.getElementById(`lyrics-${songId}`);
-
-                        if (lyricsContent.style.display === 'block') {
-                            lyricsContent.style.display = 'none';
-                            button.textContent = '查看歌詞';
-                        } else {
-                            lyricsContent.style.display = 'block';
-                            button.textContent = '收起歌詞';
-                        }
                     });
                 });
             }
