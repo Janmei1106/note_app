@@ -373,9 +373,47 @@
             transition: transform 0.3s ease;
         }
 
-        .song-detail-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        .song-actions {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+            align-items: center;
+        }
+
+        .lyrics-toggle-btn {
+            background: #f5f5f5;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 16px;
+            cursor: pointer;
+            font-size: 0.9em;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .lyrics-toggle-btn:hover {
+            background: #000;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .lyrics-content {
+            display: none;
+            margin: 15px 0;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 12px;
+            white-space: pre-line;
+            font-size: 0.9em;
+            color: #666;
+            line-height: 1.6;
+            border: 1px solid #eee;
+        }
+
+        .song-ratings {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
         }
 
         .song-cover-large {
@@ -419,29 +457,8 @@
             background-color: #cc0000;
         }
 
-        .lyrics-toggle-btn {
-            background: #f5f5f5;
-            border: none;
-            border-radius: 20px;
-            padding: 8px 16px;
-            margin-right: 10px;
-            cursor: pointer;
-            font-size: 0.9em;
-            color: #333;
-        }
-
-        .lyrics-toggle-btn:hover {
-            background: #000;
-            color: white;
-        }
-
-        .lyrics-content {
-            display: none;
-            margin-top: 15px;
-            padding: 15px;
-            background: #f9f9f9;
-            border-radius: 8px;
-            white-space: pre-line;
+        .song-rating-display {
+            margin-top: 5px;
             font-size: 0.9em;
             color: #666;
         }
@@ -1660,10 +1677,12 @@
                                         `).join('')}
                                     </div>
                                     <div class="song-rating-display"></div>
-                                    <button class="lyrics-toggle-btn" data-song-id="${song.歌名.replace(/\s+/g, '-')}">查看歌詞</button>
-                                    <a href="${song.YouTube連結}" target="_blank" class="youtube-link">
-                                        在 YouTube 上播放
-                                    </a>
+                                    <div class="song-actions">
+                                        <button class="lyrics-toggle-btn" data-song-id="${song.歌名.replace(/\s+/g, '-')}">查看歌詞</button>
+                                        <a href="${song.YouTube連結}" target="_blank" class="youtube-link">
+                                            在 YouTube 上播放
+                                        </a>
+                                    </div>
                                     <div class="lyrics-content" id="lyrics-${song.歌名.replace(/\s+/g, '-')}">
                                         ${song.歌詞 || '暫無歌詞'}
                                     </div>
