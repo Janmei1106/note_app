@@ -752,12 +752,17 @@
             cursor: pointer;
             transition: all 0.3s ease;
             color: #333;
+            position: relative;
+        }
+
+        .category-tab.active {
+            background: #000;
+            color: white;
         }
 
         .category-tab:hover {
             background: #000;
             color: white;
-            transform: translateY(-2px);
         }
 
         /* 移除之前的首個標籤和選中樣式 */
@@ -946,6 +951,15 @@
             background: white;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             transition: opacity 0.3s ease;
+            min-height: 200px;
+            position: relative;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .subcategory-container.visible {
+            opacity: 1;
+            visibility: visible;
         }
 
         .subcategory-container.fixed {
@@ -1316,18 +1330,25 @@
                 const resetButton = document.querySelector('.reset-button');
                 resetButton.addEventListener('click', resetMoodSelection);
 
-                // 綁定類別標籤懸停事件
+                // 綁定類別標籤點擊事件
                 document.querySelectorAll('.category-tab').forEach(tab => {
-                    tab.addEventListener('mouseenter', () => {
+                    tab.addEventListener('click', () => {
                         const category = tab.dataset.category;
+                        // 移除其他標籤的active狀態
+                        document.querySelectorAll('.category-tab').forEach(t =>
+                            t.classList.remove('active'));
+                        // 添加當前標籤的active狀態
+                        tab.classList.add('active');
+
                         if (!selectedMood) {
                             showMoodSubcategories(uniqueMoods, category);
+                            document.querySelector('.subcategory-container').classList.add('visible');
                         }
                     });
                 });
 
                 // 初始隱藏子類別區域
-                document.querySelector('.subcategory-container').style.display = 'none';
+                document.querySelector('.subcategory-container').classList.remove('visible');
 
                 // 綁定情緒卡片點擊事件
                 document.addEventListener('click', (e) => {
@@ -1348,23 +1369,11 @@
                     }
                 });
 
-                // 監聽整個類別區域的懸停事件
-                const categorySection = document.querySelector('.mood-category-section');
-                const subcategoryContainer = document.querySelector('.subcategory-container');
-
-                categorySection.addEventListener('mouseleave', () => {
-                    if (!selectedMood) {
-                        subcategoryContainer.style.display = 'none';
-                    }
-                });
-
-                document.querySelectorAll('.category-tab').forEach(tab => {
-                    tab.addEventListener('mouseenter', () => {
-                        if (!selectedMood) {
-                            subcategoryContainer.style.display = 'block';
-                        }
-                    });
-                });
+                // 初始選中第一個類別
+                const firstTab = document.querySelector('.category-tab');
+                if (firstTab) {
+                    firstTab.click();
+                }
             }
 
             function showMoodSubcategories(allMoods, category) {
