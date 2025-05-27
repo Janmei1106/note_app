@@ -919,6 +919,11 @@
             transition: all 0.3s ease;
             user-select: none;
             /* 防止文字被選中 */
+            flex: 1;
+            min-width: 0;
+            width: calc((100% - 72px) / 10);
+            /* 10個卡片，9個間隔的8px */
+            margin: 0;
         }
 
         .mood-card .mood-emoji {
@@ -1046,15 +1051,12 @@
         }
 
         .mood-grid {
-            display: grid;
-            grid-template-columns: repeat(10, 1fr);
+            display: flex;
+            flex-wrap: wrap;
             gap: 8px;
             margin: 15px 0;
             padding-top: 20px;
             width: 100%;
-            max-width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
         @media (max-width: 768px) {
