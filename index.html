@@ -1183,16 +1183,6 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // 檢查是否有已保存的音樂資料庫
-            const savedSongDatabase = localStorage.getItem('songDatabase');
-            if (savedSongDatabase) {
-                songDatabase = JSON.parse(savedSongDatabase);
-                // 如果有保存的資料庫，生成情緒和情境按鈕
-                const moods = [...new Set(songDatabase.map(song => song.情緒))];
-                generateMoodCards(moods);
-                generateScenarioButtons();
-            }
-
             const pages = {
                 upload: document.getElementById('page-upload'),
                 mood: document.getElementById('page-mood'),
@@ -1447,13 +1437,11 @@
             // 頁面導航
             navButtons.forEach(button => {
                 button.addEventListener('click', () => {
-                    // 如果是第一次使用且點擊的不是上傳頁面
-                    if (!localStorage.getItem('hasUploadedBefore') && !songDatabase.length && button.dataset.page !== 'page-upload') {
-                        alert('首次使用請先上傳音樂資料庫！');
+                    if (!songDatabase.length && button.dataset.page !== 'page-upload') {
+                        alert('請先上傳音樂資料庫！');
                         return;
                     }
 
-                    // 如果點擊音樂推薦頁面但沒有心情記錄
                     if (button.dataset.page === 'page-music') {
                         lastMoodRecord = getLastMoodRecord();
                         if (!lastMoodRecord) {
@@ -1748,11 +1736,6 @@
 
                         generateMoodCards(moods);
                         generateScenarioButtons(); // 生成情境按鈕
-
-                        // 設置已上傳標記
-                        localStorage.setItem('hasUploadedBefore', 'true');
-                        // 保存音樂資料庫到 localStorage
-                        localStorage.setItem('songDatabase', JSON.stringify(songDatabase));
 
                         uploadStatus.textContent = '音樂資料庫已更新！';
                         uploadStatus.style.color = '#4CAF50';
