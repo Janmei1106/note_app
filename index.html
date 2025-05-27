@@ -1864,11 +1864,43 @@
                 updateHistory();
                 lastMoodRecord = moodEntry;
 
+                // 更新音樂推薦頁面的歌單
+                updateMusicRecommendations();
+
+                // 更新本次心情記錄顯示
+                const currentMoodRecord = document.querySelector('.current-mood-record');
+                if (currentMoodRecord) {
+                    currentMoodRecord.innerHTML = `
+                        <div class="record-header">
+                            <h3>本次心情記錄</h3>
+                        </div>
+                        <div class="mood-entry">
+                            <p>
+                                <strong>${moodEntry.mood}</strong>
+                                ${moodEntry.scenarios && moodEntry.scenarios.length > 0
+                            ? `<span class="selected-scenario">| ${moodEntry.scenarios.join(', ')}</span>`
+                            : ''}
+                                <span style="color: #666;">| ${moodEntry.date}</span>
+                            </p>
+                            <p>${moodEntry.note}</p>
+                            ${moodEntry.songRatings && moodEntry.songRatings.length > 0 ? `
+                                <div class="song-ratings">
+                                    <p><strong>歌曲評分：</strong></p>
+                                    ${moodEntry.songRatings.map(rating => `
+                                        <p>${rating.songName}: ${Array(rating.rating).fill('★').join('')}</p>
+                                    `).join('')}
+                                </div>
+                            ` : ''}
+                        </div>
+                    `;
+                }
+
                 // 重置選擇
                 selectedScenarios.clear();
                 document.querySelectorAll('.choice-button[data-scenario]').forEach(btn =>
                     btn.classList.remove('selected'));
 
+                // 切換到音樂推薦頁面
                 document.querySelector('[data-page="page-music"]').click();
             });
 
