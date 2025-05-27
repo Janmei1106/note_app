@@ -493,13 +493,575 @@
             margin-top: 5px;
         }
 
-        .song-ratings {
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px solid #eee;
+        .song-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
-        .mood-analysis-result {
+        .stat-item {
+            background-color: #f5f5f5;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.9em;
+        }
+
+        /* 按鈕共用樣式 */
+        .choice-button {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            padding: 8px 16px;
+            margin: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+        }
+
+        .choice-button:hover {
+            background-color: #f5f5f5;
+            transform: translateY(-2px);
+        }
+
+        .choice-button.selected {
+            background-color: #000;
+            color: white;
+            border-color: #000;
+        }
+
+        .choice-section {
+            margin: 20px 0;
+        }
+
+        .choice-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .section-label {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .choices-container {
+            background-color: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 情緒分類定義 */
+        .mood-category-section,
+        .mood-subcategory-section {
+            margin: 20px 0;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .category-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .category-label {
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .back-button {
+            background: #f5f5f5;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px 20px;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: #eee;
+        }
+
+        .mood-subcategory-section {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        #mood-subcategory-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .category-title {
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .mood-category-section {
+            margin: 20px auto;
+            max-width: 1000px;
+            text-align: center;
+        }
+
+        .category-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px auto;
+            max-width: 800px;
+        }
+
+        .category-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex: 1;
+            max-width: 200px;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .category-label {
+            font-size: 1.2em;
+            color: #333;
+        }
+
+        .subcategory-container {
+            margin-top: 30px;
+            padding: 20px;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .mood-grid {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .mood-card {
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .mood-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .mood-card.selected {
+            border-color: #000;
+            background-color: #f8f8f8;
+        }
+
+        .mood-emoji {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+        }
+
+        .mood-label {
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        .category-title {
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f0f0f0;
+            text-align: left;
+        }
+
+        @media (max-width: 1200px) {
+            .mood-grid {
+                grid-template-columns: repeat(5, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mood-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .mood-category-section {
+            margin: 20px auto;
+            max-width: 1000px;
+        }
+
+        .category-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .category-tab {
+            background: #f5f5f5;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #333;
+            position: relative;
+        }
+
+        .category-tab.active {
+            background: #000;
+            color: white;
+        }
+
+        .category-tab:hover {
+            background: #000;
+            color: white;
+        }
+
+        /* 移除之前的首個標籤和選中樣式 */
+        .category-tab:first-child,
+        .category-tab.active {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .category-tab:first-child:hover,
+        .category-tab.active:hover {
+            background: #000;
+            color: white;
+        }
+
+        .subcategory-container {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .mood-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .mood-card {
+            background: #f5f5f5;
+            border: none;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mood-card .mood-emoji {
+            font-size: 1.5em;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .mood-card .mood-label {
+            font-size: 1em;
+            transition: all 0.3s ease;
+            font-weight: normal;
+        }
+
+        .mood-card:hover {
+            background: #000;
+            transform: translateY(-2px);
+        }
+
+        .mood-card:hover .mood-emoji,
+        .mood-card:hover .mood-label {
+            color: white;
+        }
+
+        .mood-card.selected {
+            background: #000;
+        }
+
+        .mood-card.selected .mood-emoji,
+        .mood-card.selected .mood-label {
+            color: white;
+        }
+
+        .mood-card.selected .mood-label {
+            font-weight: bold;
+        }
+
+        .mood-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        @media (max-width: 768px) {
+            .category-tabs {
+                flex-direction: column;
+            }
+
+            .category-tab {
+                text-align: center;
+            }
+
+            .mood-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* 星級評分樣式 */
+        .rating {
+            display: flex;
+            gap: 5px;
+            margin: 10px 0;
+        }
+
+        .star {
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #ddd;
+            transition: color 0.2s ease;
+        }
+
+        .star.active {
+            color: #FFD700;
+        }
+
+        .star:hover,
+        .star:hover~.star {
+            color: #FFD700;
+        }
+
+        .rating:hover .star {
+            color: #FFD700;
+        }
+
+        .rating .star:hover~.star {
+            color: #ddd;
+        }
+
+        .song-rating-display {
+            margin-top: 5px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .mood-card {
+            background: #f5f5f5;
+            border: none;
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            user-select: none;
+            /* 防止文字被選中 */
+        }
+
+        .mood-card .mood-emoji {
+            font-size: 1.5em;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .mood-card .mood-label {
+            font-size: 1em;
+            transition: all 0.3s ease;
+            font-weight: normal;
+        }
+
+        .mood-card:hover {
+            background: #000;
+            transform: translateY(-2px);
+        }
+
+        .mood-card:hover .mood-emoji,
+        .mood-card:hover .mood-label {
+            color: white;
+        }
+
+        .mood-card.selected {
+            background: #000;
+            pointer-events: auto;
+            /* 確保選中後仍可點擊 */
+        }
+
+        .mood-card.selected .mood-emoji,
+        .mood-card.selected .mood-label {
+            color: white;
+        }
+
+        .mood-card.selected .mood-label {
+            font-weight: bold;
+        }
+
+        .subcategory-container {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: opacity 0.3s ease;
+            min-height: 200px;
+            position: relative;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .subcategory-container.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .subcategory-container.fixed {
+            opacity: 1 !important;
+            pointer-events: auto !important;
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .reset-button {
+            background: #f5f5f5;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        .reset-button:hover {
+            background: #000;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .category-tabs {
+            display: flex;
+            gap: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .category-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .reset-button {
+                width: 100%;
+                margin-top: 10px;
+            }
+        }
+
+        .subcategory-container {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 12px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            transition: opacity 0.3s ease;
+            position: relative;
+        }
+
+        .reset-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #f5f5f5;
+            border: none;
+            border-radius: 50px;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+            color: #333;
+            z-index: 10;
+        }
+
+        .reset-button:hover {
+            background: #000;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .mood-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+            padding-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .reset-button {
+                top: 15px;
+                right: 15px;
+                padding: 6px 12px;
+                font-size: 0.8em;
+            }
+
+            .mood-grid {
+                padding-top: 25px;
+            }
+        }
+
+        /* 在音樂推薦頁面顯示當前心情記錄 */
+        .current-mood-record {
             margin: 30px 0;
             padding: 20px;
             background: white;
@@ -507,33 +1069,50 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         }
 
-        .analysis-header {
-            text-align: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .analysis-header h3 {
-            font-size: 1.4em;
-            color: #333;
-            margin-bottom: 10px;
-        }
-
-        .analysis-header p {
-            color: #666;
-            font-size: 1.1em;
-        }
-
-        .matched-songs {
+        .record-header {
             display: flex;
-            flex-direction: column;
-            gap: 20px;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
         }
 
-        .matched-songs .song-detail-card {
+        .record-header h3 {
             margin: 0;
-            border: 1px solid #eee;
+            color: #333;
+        }
+
+        .history-button {
+            background: #f5f5f5;
+            border: none;
+            border-radius: 50px;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9em;
+            color: #333;
+        }
+
+        .history-button:hover {
+            background: #000;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .mood-entry {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .selected-scenario {
+            color: #666;
+            margin: 0 5px;
+        }
+
+        .song-ratings {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid #eee;
         }
     </style>
 </head>
@@ -1258,103 +1837,12 @@
                 updateHistory();
                 lastMoodRecord = moodEntry;
 
-                // 分析情緒並顯示相關歌曲
-                const moodAnalysisResult = document.createElement('div');
-                moodAnalysisResult.className = 'mood-analysis-result';
-
-                // 過濾符合當前情緒的歌曲
-                let matchedSongs = songDatabase.filter(song => {
-                    const songMoods = processMoodString(song.情緒);
-                    return songMoods.includes(selectedMood);
-                });
-
-                // 根據點閱率排序
-                matchedSongs.sort((a, b) => {
-                    const viewsA = parseInt(a.點閱率) || 0;
-                    const viewsB = parseInt(b.點閱率) || 0;
-                    return viewsB - viewsA;
-                });
-
-                // 生成分析結果HTML
-                moodAnalysisResult.innerHTML = `
-                    <div class="analysis-header">
-                        <h3>您選擇的心情是：${selectedMood}</h3>
-                        <p>已為您找到 ${matchedSongs.length} 首相關歌曲</p>
-                    </div>
-                    <div class="matched-songs">
-                        ${matchedSongs.map(song => `
-                            <div class="song-detail-card">
-                                <img src="${song.封面圖片 || 'default-cover.jpg'}" alt="${song.歌名}" class="song-cover-large">
-                                <div class="song-info">
-                                    <h3 class="song-title">${song.歌名}</h3>
-                                    <p class="song-artist">${song.歌手}</p>
-                                    <div class="song-stats">
-                                        <div class="stat-item">
-                                            <span>語言:</span>
-                                            <strong>${song.語言}</strong>
-                                        </div>
-                                        <div class="stat-item">
-                                            <span>點閱率:</span>
-                                            <strong>${formatViews(song.點閱率)}</strong>
-                                        </div>
-                                        <div class="stat-item">
-                                            <span>情緒:</span>
-                                            <strong>${song.情緒}</strong>
-                                        </div>
-                                        ${song.情境 ? `
-                                        <div class="stat-item">
-                                            <span>情境:</span>
-                                            <strong>${song.情境}</strong>
-                                        </div>
-                                        ` : ''}
-                                    </div>
-                                    <div class="rating" data-song="${song.歌名}">
-                                        ${Array(5).fill().map((_, i) => `
-                                            <span class="star" data-rating="${i + 1}">★</span>
-                                        `).join('')}
-                                    </div>
-                                    <div class="song-rating-display"></div>
-                                    <a href="${song.YouTube連結}" target="_blank" class="youtube-link">
-                                        在 YouTube 上播放
-                                    </a>
-                                </div>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-
-                // 清除之前的分析結果
-                const existingResult = document.querySelector('.mood-analysis-result');
-                if (existingResult) {
-                    existingResult.remove();
-                }
-
-                // 插入分析結果到心情記錄區域之後
-                const moodRecordSection = document.querySelector('.mood-record-section');
-                moodRecordSection.parentNode.insertBefore(moodAnalysisResult, moodRecordSection.nextSibling);
-
-                // 綁定星級評分事件
-                moodAnalysisResult.querySelectorAll('.rating').forEach(ratingContainer => {
-                    const stars = ratingContainer.querySelectorAll('.star');
-                    const songName = ratingContainer.dataset.song;
-                    const displayElement = ratingContainer.nextElementSibling;
-
-                    stars.forEach(star => {
-                        star.addEventListener('click', () => {
-                            const rating = parseInt(star.dataset.rating);
-                            stars.forEach((s, index) => {
-                                s.classList.toggle('active', index < rating);
-                            });
-                            addSongRating(songName, rating);
-                            displayElement.textContent = `您給這首歌 ${rating} 顆星`;
-                        });
-                    });
-                });
-
                 // 重置選擇
                 selectedScenarios.clear();
                 document.querySelectorAll('.choice-button[data-scenario]').forEach(btn =>
                     btn.classList.remove('selected'));
+
+                document.querySelector('[data-page="page-music"]').click();
             });
 
             function updateHistory() {
