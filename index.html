@@ -1881,12 +1881,103 @@
                 updateHistory();
                 lastMoodRecord = moodEntry;
 
+                // 分析情緒並顯示相關歌曲
+                const moodAnalysisResult = document.createElement('div');
+                moodAnalysisResult.className = 'mood-analysis-result';
+
+                // 過濾符合當前情緒的歌曲
+                let matchedSongs = songDatabase.filter(song => {
+                    const songMoods = processMoodString(song.情緒);
+                    return songMoods.includes(selectedMood);
+                });
+
+                // 根據點閱率排序
+                matchedSongs.sort((a, b) => {
+                    const viewsA = parseInt(a.點閱率) || 0;
+                    const viewsB = parseInt(b.點閱率) || 0;
+                    return viewsB - viewsA;
+                });
+
+                // 生成分析結果HTML
+                moodAnalysisResult.innerHTML = `
+                    <div class="analysis-header">
+                        <h3>您選擇的心情是：${selectedMood}</h3>
+                        <p>已為您找到 ${matchedSongs.length} 首相關歌曲</p>
+                    </div>
+                    <div class="matched-songs">
+                        ${matchedSongs.map(song => `
+                            <div class="song-detail-card">
+                                <img src="${song.封面圖片 || 'default-cover.jpg'}" alt="${song.歌名}" class="song-cover-large">
+                                <div class="song-info">
+                                    <h3 class="song-title">${song.歌名}</h3>
+                                    <p class="song-artist">${song.歌手}</p>
+                                    <div class="song-stats">
+                                        <div class="stat-item">
+                                            <span>語言:</span>
+                                            <strong>${song.語言}</strong>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span>點閱率:</span>
+                                            <strong>${formatViews(song.點閱率)}</strong>
+                                        </div>
+                                        <div class="stat-item">
+                                            <span>情緒:</span>
+                                            <strong>${song.情緒}</strong>
+                                        </div>
+                                        ${song.情境 ? `
+                                        <div class="stat-item">
+                                            <span>情境:</span>
+                                            <strong>${song.情境}</strong>
+                                        </div>
+                                        ` : ''}
+                                    </div>
+                                    <div class="rating" data-song="${song.歌名}">
+                                        ${Array(5).fill().map((_, i) => `
+                                            <span class="star" data-rating="${i + 1}">★</span>
+                                        `).join('')}
+                                    </div>
+                                    <div class="song-rating-display"></div>
+                                    <a href="${song.YouTube連結}" target="_blank" class="youtube-link">
+                                        在 YouTube 上播放
+                                    </a>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+
+                // 清除之前的分析結果
+                const existingResult = document.querySelector('.mood-analysis-result');
+                if (existingResult) {
+                    existingResult.remove();
+                }
+
+                // 插入分析結果到心情記錄區域之後
+                const moodRecordSection = document.querySelector('.mood-record-section');
+                moodRecordSection.parentNode.insertBefore(moodAnalysisResult, moodRecordSection.nextSibling);
+
+                // 綁定星級評分事件
+                moodAnalysisResult.querySelectorAll('.rating').forEach(ratingContainer => {
+                    const stars = ratingContainer.querySelectorAll('.star');
+                    const songName = ratingContainer.dataset.song;
+                    const displayElement = ratingContainer.nextElementSibling;
+
+                    stars.forEach(star => {
+                        star.addEventListener('click', () => {
+                            const rating = parseInt(star.dataset.rating);
+                            stars.forEach((s, index) => {
+                                s.classList.toggle('active', index < rating);
+                            });
+                            addSongRating(songName, rating);
+                            displayElement.textContent = `您給這首歌 ${rating} 顆星`;
+                        });
+                    });
+                });
+
                 // 重置選擇
                 selectedScenarios.clear();
                 document.querySelectorAll('.choice-button[data-scenario]').forEach(btn =>
                     btn.classList.remove('selected'));
-
-                document.querySelector('[data-page="page-music"]').click();
             });
 
             function updateHistory() {
