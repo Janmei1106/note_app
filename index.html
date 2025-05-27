@@ -1306,16 +1306,43 @@
 
             function resetMoodSelection() {
                 selectedMood = '';
+                // 重置所有情緒卡片的選中狀態
                 document.querySelectorAll('.mood-card').forEach(card => {
                     card.classList.remove('selected');
                 });
-                document.querySelector('.reset-button').style.display = 'none';
-                document.querySelector('.subcategory-container').style.display = 'none';
 
                 // 重置情境選擇
                 selectedScenarios.clear();
+                document.querySelectorAll('.scenario-tag').forEach(tag => {
+                    tag.classList.remove('selected');
+                });
+
+                // 清空筆記內容
+                document.querySelector('.note-input').value = '';
+
+                // 隱藏重置按鈕
+                document.querySelector('.reset-button').style.display = 'none';
+
+                // 重新顯示類別選擇區域
+                const subcategoryContainer = document.querySelector('.subcategory-container');
+                subcategoryContainer.style.display = 'block';
+                subcategoryContainer.classList.remove('visible');
+
+                // 重新觸發第一個類別的點擊
+                const firstTab = document.querySelector('.category-tab');
+                if (firstTab) {
+                    firstTab.click();
+                }
+
+                // 更新顯示
                 updateScenarioSection(selectedMood);
                 updateSelectedMoodDisplay();
+
+                // 移除已有的歌曲分析結果（如果存在）
+                const existingResult = document.querySelector('.mood-analysis-result');
+                if (existingResult) {
+                    existingResult.remove();
+                }
             }
 
             function generateMoodCards(moods) {
