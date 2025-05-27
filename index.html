@@ -1860,6 +1860,13 @@
             }
 
             submitBtn.addEventListener('click', () => {
+                // 檢查是否已上傳檔案
+                if (!localStorage.getItem('hasUploadedBefore') || !songDatabase.length) {
+                    alert('首次使用請先上傳音樂資料庫！');
+                    document.querySelector('[data-page="page-upload"]').click();
+                    return;
+                }
+
                 if (!selectedMood) {
                     alert('請選擇一個心情！');
                     return;
